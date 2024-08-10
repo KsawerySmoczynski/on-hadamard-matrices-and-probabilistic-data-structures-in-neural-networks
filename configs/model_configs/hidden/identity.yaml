@@ -1,0 +1,7 @@
+# pytorch_lightning==1.9.5
+fit:
+  model:
+    net:
+      init_args:
+        hidden_module:
+          class_path: torch.nn.Identity

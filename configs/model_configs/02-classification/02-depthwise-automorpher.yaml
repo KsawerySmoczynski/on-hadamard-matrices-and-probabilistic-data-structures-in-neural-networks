@@ -1,0 +1,15 @@
+# pytorch_lightning==1.9.5
+fit:
+  model:
+    net:
+      class_path: morphers.net.depthwise_automorpher.DepthwiseAutomorpherNet
+      init_args:
+        input_shape: $IMG_DIM
+        hidden_module: null
+        head:
+          class_path: torch.nn.Linear
+          init_args:
+            in_features: $HIDDEN_DIM # has to match coalesced input
+            out_features: 10
+        coalesce_factor: 4 # 4 gives 128 hidden dim and 7 patches, 7 gives 256 and 4 patches
+        

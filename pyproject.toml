@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "morphers"
+version = "0.1.0"
+description = ""
+authors = ["Ksawery Smoczyński <k.smocz@gmail.com>"]
+readme = "README.md"
+packages = [{include = "morphers"}]
+
+[tool.poetry.dependencies]
+python = "~3.10"
+torch = "^2.0.0"
+pytorch-lightning = "^1.9.5"
+numpy = "^1.26.0"
+scipy = "^1.11.2"
+matplotlib = "^3.8.0"
+jsonargparse = {version="*", extras=["signatures"]}
+ipython = "^8.15.0"
+torchvision = "^0.15.2"
+tensorboard = "^2.14.0"
+notebook = "^7.0.6"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.4.0"
+ruff = "^0.0.291"
+black = "^23.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+src = ["morphers", "scripts"]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F", "I"]
+extend-select = ["I"]
+ignore = ["E711", "F401"]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["I"]
+unfixable = []
+
+# Same as Black.
+line-length = 200
+
+[tool.black]
+line-length = 200

@@ -1,0 +1,14 @@
+# pytorch_lightning==1.9.5
+fit:
+  model:
+    net:
+      init_args:
+        hidden_module:
+          class_path: torch.nn.Sequential
+          init_args:
+            - class_path: torch.nn.LeakyReLU
+            - class_path: torch.nn.Linear
+              init_args:
+                in_features: $HIDDEN_DIM
+                out_features: $HIDDEN_DIM
+            - class_path: torch.nn.LeakyReLU

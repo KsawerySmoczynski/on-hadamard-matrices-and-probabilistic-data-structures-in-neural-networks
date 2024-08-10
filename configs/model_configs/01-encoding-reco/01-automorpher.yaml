@@ -1,0 +1,10 @@
+# pytorch_lightning==1.9.5
+fit:
+  model:
+    net:
+      class_path: morphers.net.automorpher.AutomorpherNet
+      init_args:
+        n_input: $INPUT_DIM
+        n_features: $HIDDEN_DIM
+        hidden_module: null
+        head: null

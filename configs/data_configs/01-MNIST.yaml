@@ -1,0 +1,6 @@
+fit:
+  data:
+    dataset_provider:
+      class_path: morphers.dataset.MNIST.MNISTProvider
+      init_args:
+        data_root: datasets
