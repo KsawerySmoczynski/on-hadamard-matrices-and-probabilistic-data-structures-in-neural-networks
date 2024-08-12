@@ -2,7 +2,7 @@
 fit:
   model:
     net:
-      class_path: morphers.net.depthwise_automorpher.DepthwiseAutomorpherNet
+      class_path: morphers.net.morpherv2.MorpherNetv2
       init_args:
         input_shape: $IMG_DIM
         hidden_module: null

@@ -1,7 +1,7 @@
-from .automorpher import (
-    AutomorpherNet,
+from .morpher import (
+    MorpherNet,
     WeightedAutomorpherNet,
 )
-from .depthwise_automorpher import DepthwiseAutomorpherNet
+from .morpherv2 import MorpherNetv2
 
-__all__ = [AutomorpherNet.__name__, WeightedAutomorpherNet.__name__, DepthwiseAutomorpherNet.__name__]
+__all__ = [MorpherNet.__name__, WeightedAutomorpherNet.__name__, MorpherNetv2.__name__]

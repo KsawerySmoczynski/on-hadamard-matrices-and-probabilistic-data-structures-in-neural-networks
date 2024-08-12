@@ -2,7 +2,7 @@
 fit:
   model:
     net:
-      class_path: morphers.net.automorpher.AutomorpherNet
+      class_path: morphers.net.morpher.MorpherNet
       init_args:
         n_input: $INPUT_DIM
         n_features: $HIDDEN_DIM

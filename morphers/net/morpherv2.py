@@ -7,7 +7,7 @@ from morphers.net.interface import Net
 
 # TODO add patch weights as in normal automorpher
 
-class DepthwiseAutomorpherNet(Net):
+class MorpherNetv2(Net):
     def __init__(
         self,
         input_shape: tuple[int, int],

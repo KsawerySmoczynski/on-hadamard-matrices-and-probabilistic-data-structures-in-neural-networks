@@ -5,7 +5,7 @@ from morphers.net.layers import InverterLayer
 from torch import nn
 
 
-class AutomorpherNet(Net):
+class MorpherNet(Net):
     def __init__(self, n_input: int, n_features: int, hidden_module: nn.Module, head: nn.Module | None = None):
         super().__init__()
         self.n_input = n_input
@@ -50,7 +50,7 @@ class AutomorpherNet(Net):
         return x
 
 
-class WeightedAutomorpherNet(AutomorpherNet):
+class WeightedAutomorpherNet(MorpherNet):
     def __init__(self, n_input: int, n_features: int, hidden_module: nn.Module = None, head: nn.Module = None):
         super().__init__(n_input, n_features, hidden_module)
         # Trainable patch weights
