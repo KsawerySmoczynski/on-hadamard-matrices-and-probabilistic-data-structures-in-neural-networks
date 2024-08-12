@@ -37,9 +37,9 @@ class MNISTClassificationModule(LightningModule):
     def validation_step(self, batch, batch_idx):
         x, ids = batch
         output = self.forward(self._reshape_input(x))
-        loss = nn.functional.cross_entropy(output, ids)
+        loss = nn.functional.cross_entropy(output, ids, reduction="sum")
         self.accuracy(output, ids)
-        self.log("val_loss", loss, on_step=False, on_epoch=True)
+        self.log("val_loss", loss, on_step=False, on_epoch=True, reduce_fx=torch.sum)
         return loss
 
     def on_validation_epoch_end(self) -> None:

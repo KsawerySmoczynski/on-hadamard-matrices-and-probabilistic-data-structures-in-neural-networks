@@ -11,5 +11,5 @@ fit:
           init_args:
             in_features: $HIDDEN_DIM # has to match coalesced input
             out_features: 10
-        coalesce_factor: 4 # 4 gives 128 hidden dim and 7 patches, 7 gives 256 and 4 patches
+        coalesce_factor: $COALESCE_FACTOR # 4 gives 128 hidden dim and 7 patches, 7 gives 256 and 4 patches
         

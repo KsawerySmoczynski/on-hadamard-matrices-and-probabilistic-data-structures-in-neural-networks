@@ -20,5 +20,7 @@ def load_config(config_paths: List[str]) -> dict:
 
 
 def save_config(config: dict, path: Union[str, Path]) -> None:
-    with (Path(path) / "config.yaml").open("w") as f:
+    config_path = Path(path) / "config.yaml"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    with config_path.open("w") as f:
         yaml.dump(config, f)

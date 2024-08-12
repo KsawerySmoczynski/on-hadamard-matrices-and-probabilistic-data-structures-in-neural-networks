@@ -48,7 +48,7 @@ for experiment, metrics_config in EXPERIMENTS_CONFIGURATION.items():
         event_accumulator = load_event_accumulator(log_file_path)
         experiment_data = get_metrics(event_accumulator, metrics_config)
         _, experiment, model, experiment_name, date, hour, version, log_file_name = log_file_path.parts
-        # experiment_name, seed = experiment_name.split("_seed")
+        experiment_name = experiment_name.replace("_seed", "_s")
         date, hidden_size, num_hidden, seed = experiment_name[:8], int(experiment_name[10:13]), experiment_name[14:-4], int(experiment_name[-2:])
         experiment_data["experiment"] = experiment
         experiment_data["model"] = model

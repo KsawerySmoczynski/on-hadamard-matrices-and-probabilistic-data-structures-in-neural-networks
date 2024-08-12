@@ -166,3 +166,4 @@ datasets
 .ruff_cache
 .misc
 .vscode
+*.csv

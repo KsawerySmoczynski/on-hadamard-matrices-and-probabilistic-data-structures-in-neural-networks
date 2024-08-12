@@ -41,7 +41,8 @@ if __name__ == "__main__":
         raise NotImplementedError(f"{args.experiment} experiment not implemented")
     datamodule = MyLightningDataModule(**data_config)
     logger = get_logger(module, data_config["dataset_provider"], model_config["net"], args.experiment_name)
-
+    save_config(config, logger.log_dir)
+    
     trainer = Trainer(**trainer_config, logger=logger)
     trainer.fit(model=module, datamodule=datamodule)
-    save_config(config, logger.log_dir)
+    
