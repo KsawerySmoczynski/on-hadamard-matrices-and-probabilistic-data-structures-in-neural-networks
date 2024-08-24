@@ -1,0 +1,8 @@
+fit:
+  data:
+    dataset_provider:
+      class_path: morphers.dataset.MNIST_mapped_entities.MNISTMappedEntitiesProvider
+      init_args:
+        data_root: datasets
+        train_indices_map_path: "artifacts/mnist_indices_mapping_train_file.json"
+        val_indices_map_path: "artifacts/mnist_indices_mapping_val_file.json"

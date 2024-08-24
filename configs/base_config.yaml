@@ -3,7 +3,7 @@ fit:
   seed_everything: $SEED
   trainer:
     # logger: true
-    enable_checkpointing: true
+    enable_checkpointing: false
     callbacks: null
     default_root_dir: null
     gradient_clip_val: null

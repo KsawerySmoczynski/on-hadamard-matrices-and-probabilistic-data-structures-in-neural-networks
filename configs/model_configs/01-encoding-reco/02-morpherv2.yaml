@@ -8,4 +8,4 @@ fit:
         hidden_module: null
         head: null
         coalesce_factor: $COALESCE_FACTOR # 4 gives 128 hidden dim and 7 patches
-        
+

@@ -1,7 +1,6 @@
 import torch
-from torch import nn
-
 from morphers.net.interface import Net
+from torch import nn
 
 
 class BaselineNet(Net):
@@ -12,7 +11,7 @@ class BaselineNet(Net):
         self.l_out = head if head is not None else nn.Linear(n_features, n_input)
 
     def get_input_shape(self) -> tuple[int]:
-        return (self.l_in.in_features, )
+        return (self.l_in.in_features,)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = nn.functional.leaky_relu(self.l_in(x))

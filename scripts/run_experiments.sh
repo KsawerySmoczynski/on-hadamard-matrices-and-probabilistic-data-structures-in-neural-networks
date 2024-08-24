@@ -27,4 +27,3 @@ LAYERS="$(basename $HIDDEN_LAYER_CONFIG_PATH)"
 EXPERIMENT_NAME="${EXPERIMENT_NAME}_h${HIDDEN_DIM}_${LAYERS%%.*}_seed${SEED}"
 
 echo $MODEL_CONFIGS | tr ' ' '\n' | xargs -S 2048 -P 4 -I@ bash -c "python scripts/train.py ${EXPERIMENT} --experiment-name ${EXPERIMENT_NAME}  --configs ${BASE_CONFIG} ${DATA_CONFIG_PATH} @ ${HIDDEN_LAYER_CONFIG_PATH} ${MAPPING_PATH}"
-

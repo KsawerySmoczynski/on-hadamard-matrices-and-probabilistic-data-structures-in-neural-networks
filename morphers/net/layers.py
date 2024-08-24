@@ -34,10 +34,13 @@ class InverterLayer(nn.Module):
     def reset_parameters(self) -> None:
         # https://pytorch.org/docs/stable/_modules/torch/nn/modules/linear.html#Linear
         # https://github.com/pytorch/pytorch/issues/57109
-        nn.init.kaiming_uniform_(self.weight_in, a=math.sqrt(5))
-        nn.init.kaiming_uniform_(self.weight_out, a=math.sqrt(5))
+        nn.init.zeros_(self.weight_in)
+        nn.init.zeros_(self.weight_out)
+        # nn.init.kaiming_uniform_(self.weight_in, a=math.sqrt(5))
+        # nn.init.kaiming_uniform_(self.weight_out, a=math.sqrt(5))
         for patch_weight in self.patches_weights:
-            nn.init.kaiming_uniform_(patch_weight, a=math.sqrt(5))
+            # nn.init.kaiming_uniform_(patch_weight, a=math.sqrt(5))
+            nn.init.zeros_(patch_weight)
             with torch.no_grad():
                 patch_weight[torch.arange(self.n_hidden), torch.arange(self.n_hidden)] = torch.ones(self.n_hidden, **self._factory_kwargs)
 
