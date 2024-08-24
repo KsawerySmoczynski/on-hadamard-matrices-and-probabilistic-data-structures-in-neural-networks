@@ -1,6 +1,6 @@
 import importlib
 from copy import deepcopy
-from typing import Dict, List, MutableMapping, Tuple, Union
+from typing import Dict, List, Mapping, MutableMapping, Tuple, Union
 
 from pytorch_lightning.loggers.logger import Logger
 from pytorch_lightning.loggers.tensorboard import TensorBoardLogger
@@ -76,3 +76,7 @@ def get_configs(config: Dict) -> Dict:
     trainer_config = config["trainer"]
     seed = config["seed_everything"]
     return model_config, data_config, trainer_config, seed
+
+
+def convert_to_int_mapping(mapping: Mapping) -> dict[int, int]:
+    return {int(k): int(v) for k, v in mapping.items()}

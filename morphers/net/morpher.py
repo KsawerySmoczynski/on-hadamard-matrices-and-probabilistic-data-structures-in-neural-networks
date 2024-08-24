@@ -40,7 +40,7 @@ class MorpherNet(Net):
         # Decoder branch
         patches = []
         for p_idx in range(self.n_patches):
-            patch = aggregate * self.patch_weights[None, :, p_idx] # verify this weighting scheme
+            patch = aggregate * self.patch_weights[None, :, p_idx]  # verify this weighting scheme
             patch = self.inv(patch, p_idx, inverse=True)
             patches.append(patch)
         x = torch.cat(patches, dim=1)

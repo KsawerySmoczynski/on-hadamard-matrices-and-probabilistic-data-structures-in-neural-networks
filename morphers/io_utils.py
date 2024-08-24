@@ -1,3 +1,4 @@
+import json
 from functools import reduce
 from os.path import expandvars
 from pathlib import Path
@@ -24,3 +25,17 @@ def save_config(config: dict, path: Union[str, Path]) -> None:
     config_path.parent.mkdir(parents=True, exist_ok=True)
     with config_path.open("w") as f:
         yaml.dump(config, f)
+
+
+def load_yaml(path: Path) -> dict:
+    with open(path, "r") as f:
+        loaded_yaml = yaml.load(f, Loader=yaml.SafeLoader)
+
+    return loaded_yaml
+
+
+def load_json(path: Path) -> dict:
+    with open(path, "r") as f:
+        loaded_json = json.load(f)
+
+    return loaded_json

@@ -3,7 +3,7 @@ fit:
   seed_everything: $SEED
   trainer:
     # logger: true
-    enable_checkpointing: true
+    enable_checkpointing: false
     callbacks: null
     default_root_dir: null
     gradient_clip_val: null
@@ -21,7 +21,7 @@ fit:
     check_val_every_n_epoch: 1
     fast_dev_run: false
     accumulate_grad_batches: null
-    max_epochs: 50
+    max_epochs: 1
     min_epochs: null
     max_steps: -1
     min_steps: null

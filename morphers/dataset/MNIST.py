@@ -5,6 +5,7 @@ from torchvision.datasets import MNIST as _MNIST
 MNIST_MEAN = 0.1307
 MNIST_STD = 0.3081
 
+
 class MNISTProvider(DatasetProvider):
     def __init__(self, data_root: str):
         self.data_root = data_root

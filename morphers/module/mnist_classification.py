@@ -1,13 +1,13 @@
 from typing import Any
 
 import torch
+import torchmetrics
+from morphers.module.utils import get_optimizer
+from morphers.net.interface import Net
 from morphers.utils import get_tb_logger
 from pytorch_lightning import LightningModule
 from torch import nn
 from torchmetrics import Accuracy
-
-from morphers.module.utils import get_optimizer
-from morphers.net.interface import Net
 
 
 class MNISTClassificationModule(LightningModule):
@@ -15,6 +15,7 @@ class MNISTClassificationModule(LightningModule):
         super().__init__(*args, **kwargs)
         self.net = net
         self.accuracy = Accuracy(num_classes=10, task="multiclass")
+        self.val_loss = torchmetrics.SumMetric()
         self.input_shape = net.get_input_shape()
 
     def setup(self, stage: str):
@@ -38,12 +39,15 @@ class MNISTClassificationModule(LightningModule):
         x, ids = batch
         output = self.forward(self._reshape_input(x))
         loss = nn.functional.cross_entropy(output, ids, reduction="sum")
-        self.accuracy(output, ids)
-        self.log("val_loss", loss, on_step=False, on_epoch=True, reduce_fx=torch.sum)
+        self.accuracy.update(output, ids)
+        self.val_loss.update(loss.detach())
         return loss
 
     def on_validation_epoch_end(self) -> None:
         self.log("accuracy", self.accuracy.compute(), on_step=False, on_epoch=True)
+        self.log("val_loss", self.val_loss.compute(), on_step=False, on_epoch=True, reduce_fx="sum")
+        self.val_loss.reset()
+        self.accuracy.reset()
 
     def test_step(self, batch, batch_idx):
         raise NotImplementedError

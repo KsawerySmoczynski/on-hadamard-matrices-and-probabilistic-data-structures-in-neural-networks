@@ -21,7 +21,7 @@ class MyLightningDataModule(LightningDataModule):
         self.dataloader_params = dataloader_params
 
     def train_dataloader(self):
-        return DataLoader(self.dataset_provider.train_dataset(), **asdict(self.dataloader_params))
+        return DataLoader(self.dataset_provider.train_dataset(), **{**asdict(self.dataloader_params), "shuffle": True})
 
     def val_dataloader(self):
         return DataLoader(self.dataset_provider.val_dataset(), **{**asdict(self.dataloader_params), "shuffle": False})
