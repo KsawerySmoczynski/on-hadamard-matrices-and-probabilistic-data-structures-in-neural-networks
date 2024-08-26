@@ -45,10 +45,11 @@ class MNISTMappedEntitiesDataset(Dataset):
 
 
 class MNISTMappedEntitiesProvider(DatasetProvider):
-    def __init__(self, data_root: str, train_indices_map_path: str, val_indices_map_path: str):
+    def __init__(self, data_root: str, train_indices_map_path: str, val_indices_map_path: str, test_indices_map_path: str):
         self.data_root = data_root
         self.train_indices_map = convert_to_int_mapping(load_json(train_indices_map_path))
         self.val_indices_map = convert_to_int_mapping(load_json(val_indices_map_path))
+        self.test_indices_map = convert_to_int_mapping(load_json(test_indices_map_path))
 
     def train_dataset(self):
         return MNISTMappedEntitiesDataset(self.data_root, self.train_indices_map)
@@ -57,4 +58,4 @@ class MNISTMappedEntitiesProvider(DatasetProvider):
         return MNISTMappedEntitiesDataset(self.data_root, self.val_indices_map)
 
     def test_dataset(self):
-        raise NotImplementedError
+        return MNISTMappedEntitiesDataset(self.data_root, self.test_indices_map)

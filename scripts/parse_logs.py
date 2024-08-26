@@ -32,18 +32,18 @@ def get_metrics(ea: EventAccumulator, metrics_to_get: dict[str, MetricMonitoring
         else:
             raise ValueError("Unknown monitoring mode")
 
+    results["num_params"] = int(ea.Scalars("num_params")[0].value)
+
     return results
 
 
 LOGS_ROOT_DIR = Path("lightning_logs")
-DATA_PATH = (
-    LOGS_ROOT_DIR / "MNISTIdentityModule_MNISTProvider/DepthwiseAutomorpherNet/20240812_h128_three_hidden_s79/2024-08-12/12-23/version_0/events.out.tfevents.1723458233.ksawerys-air.home.21720.0"
-)
 
 EXPERIMENTS_CONFIGURATION = {
-    "MNISTIdentityModule_MNISTProvider": {"val_loss": MetricMonitoringMode.MIN},
-    "MNISTClassificationModule_MNISTProvider": {"accuracy": MetricMonitoringMode.MAX, "val_loss": MetricMonitoringMode.MIN},
-    "MNISTMappingModule_MNISTProvider": {"val_loss": MetricMonitoringMode.MIN},
+    "MNISTIdentityModule_MNISTProvider": {"test_loss": MetricMonitoringMode.MIN},
+    "MNISTClassificationModule_MNISTProvider": {"test_accuracy": MetricMonitoringMode.MAX, "test_loss": MetricMonitoringMode.MIN},
+    "MNISTMappingModule_MNISTProvider": {"test_loss": MetricMonitoringMode.MIN},
+    "MNISTEntityMappingModule_MNISTMappedEntitiesProvider": {"test_loss": MetricMonitoringMode.MIN},
 }
 
 
@@ -51,6 +51,8 @@ for experiment, metrics_config in EXPERIMENTS_CONFIGURATION.items():
     results = []
     for log_file_path in (LOGS_ROOT_DIR / experiment).rglob(TB_LOGS_PATTERN):
         event_accumulator = load_event_accumulator(log_file_path)
+        if "test_loss" not in event_accumulator.Tags()["scalars"]:
+            continue
         experiment_data = get_metrics(event_accumulator, metrics_config)
         _, experiment, model, experiment_name, date, hour, version, log_file_name = log_file_path.parts
         experiment_name = experiment_name.replace("_seed", "_s")

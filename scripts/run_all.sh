@@ -18,6 +18,7 @@ export INPUT_DIM=784
 
 export HIDDEN_DIM=256
 export COALESCE_FACTOR=7 #for 2 - 64 hidden dim, 4 - 128 hidden dim, for 7 - 256 hidden dim
+
 # Identity experiments
 MODEL_CONFIGS_DIR="configs/model_configs/01-encoding-reco"
 (

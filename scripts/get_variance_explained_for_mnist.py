@@ -3,22 +3,13 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import PCA, IncrementalPCA
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import StandardScaler
 from torch.utils.data import ConcatDataset
 from torchvision.datasets import MNIST
 from tqdm import tqdm
 
 # https://dataknowsall.com/blog/imagepca.html
-
-
-def variance_explained_by_first_5_components(x):
-    x = np.array(x)
-    pca = PCA()
-    pca.fit(x)
-    cumsum = np.cumsum(pca.explained_variance_ratio_)
-    first_to_95 = np.argmax(cumsum * 100 >= 95)
-    first_to_100 = np.argmax(cumsum * 100 >= 100)
-    return pca.explained_variance_ratio_.tolist(), first_to_95, first_to_100
 
 
 mnist_train = MNIST("datasets", train=True, download=True, transform=np.array)
@@ -38,12 +29,15 @@ dataset_info = []
 components_info = {}
 for cls, indices in classes.items():
     cls_imgs = np.stack([mnist[i][0].flatten() for i in indices])
+    scaler = StandardScaler()
+    cls_imgs_standarized = scaler.fit_transform(cls_imgs)
     pca = PCA()
-    pca.fit(cls_imgs)
+    pca.fit(cls_imgs_standarized)
     cumsum = np.cumsum(pca.explained_variance_ratio_)
     first_to_95 = np.argmax(cumsum * 100 >= 95)
-    pca = IncrementalPCA(n_components=first_to_95)
-    cls_imgs_reconstructed = pca.inverse_transform(pca.fit_transform(cls_imgs))
+    pca = PCA(n_components=first_to_95)
+    cls_imgs_reconstructed = pca.inverse_transform(pca.fit_transform(cls_imgs_standarized))
+    cls_imgs_reconstructed = scaler.inverse_transform(cls_imgs_reconstructed)
     rmse = np.sqrt(((cls_imgs - cls_imgs_reconstructed) ** 2).sum(1))
     for index, rmse_sample in zip(indices, rmse):
         dataset_info.append((cls, index, rmse_sample))

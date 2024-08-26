@@ -27,4 +27,4 @@ class MyLightningDataModule(LightningDataModule):
         return DataLoader(self.dataset_provider.val_dataset(), **{**asdict(self.dataloader_params), "shuffle": False})
 
     def test_dataloader(self):
-        raise NotImplementedError
+        return DataLoader(self.dataset_provider.test_dataset(), **{**asdict(self.dataloader_params), "shuffle": False})

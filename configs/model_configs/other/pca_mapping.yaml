@@ -1,0 +1,15 @@
+# pytorch_lightning==1.9.5
+fit:
+  model:
+    targets_path: artifacts/classes_mean.pkl
+    mapping:
+      0: 2
+      1: 7
+      2: 0
+      3: 6
+      4: 9
+      5: 8
+      6: 3
+      7: 1
+      8: 5
+      9: 4

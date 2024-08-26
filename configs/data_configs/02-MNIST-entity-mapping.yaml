@@ -6,3 +6,4 @@ fit:
         data_root: datasets
         train_indices_map_path: "artifacts/mnist_indices_mapping_train_file.json"
         val_indices_map_path: "artifacts/mnist_indices_mapping_val_file.json"
+        test_indices_map_path: "artifacts/mnist_indices_mapping_test_file.json"

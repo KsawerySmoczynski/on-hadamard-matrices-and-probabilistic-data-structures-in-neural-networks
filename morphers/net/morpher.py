@@ -16,7 +16,7 @@ class MorpherNet(Net):
         self.n_patches = hadamard_size // n_features
         self.hidden_module = hidden_module
         self.inv = InverterLayer(n_features, self.n_patches)
-        self.patch_weights = torch.ones(n_features, self.n_patches)
+        self.patch_weights = [torch.ones(n_features) for _ in range(self.n_patches)]
         self.head = head
 
     def get_input_shape(self) -> tuple[int]:
@@ -28,11 +28,11 @@ class MorpherNet(Net):
 
         aggregate = torch.zeros((x.shape[0], self.n_features), device=x.device, dtype=x.dtype)
         with torch.no_grad():
-            normalizing_term = self.patch_weights.sum(-1)
+            normalizing_term = sum(self.patch_weights)
         for p_idx in range(self.n_patches):
             selection = slice(p_idx * self.n_features, (p_idx + 1) * self.n_features)
             patch = x[:, selection]
-            aggregate += self.inv(patch, p_idx) * (self.patch_weights[:, p_idx] / normalizing_term)[None, :]
+            aggregate += self.inv(patch, p_idx) * (self.patch_weights[p_idx] / normalizing_term)[None, :]
         aggregate = self.hidden_module(aggregate)
         if self.head:
             return self.head(aggregate)
@@ -40,7 +40,7 @@ class MorpherNet(Net):
         # Decoder branch
         patches = []
         for p_idx in range(self.n_patches):
-            patch = aggregate * self.patch_weights[None, :, p_idx]  # verify this weighting scheme
+            patch = aggregate * self.patch_weights[p_idx][None, :]  # verify this weighting scheme
             patch = self.inv(patch, p_idx, inverse=True)
             patches.append(patch)
         x = torch.cat(patches, dim=1)

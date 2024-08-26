@@ -1,6 +1,6 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Tuple
+from typing import Optional, Tuple
 
 import torch
 from morphers.dataset.base import DatasetProvider
@@ -21,7 +21,9 @@ def get_logger(datamodule_provider: LightningModule, dataset_provider: DatasetPr
     return logger
 
 
-def log_tb_imgs(logger: SummaryWriter, epoch: int, viz_batch: Tuple[torch.Tensor, torch.Tensor]):
+def log_tb_imgs(logger: SummaryWriter, epoch: int, viz_batch: Tuple[torch.Tensor, torch.Tensor], caption: Optional[str] = None):
+    if not caption:
+        caption = f"e{epoch}"
     for img_idx, images in enumerate(zip(*viz_batch)):
         img = torch.cat(images, dim=-1)
-        logger.add_image(f"e{epoch}/{img_idx}", img, 0)
+        logger.add_image(f"{caption}/{img_idx}", img, 0)
